@@ -9,12 +9,9 @@ const getNotes = () => {
 
 const addNote = (title, body) => {
     const notes = loadNotes()
+    const duplicateNote = notes.find(note => note.title === title)
 
-    const duplicateNotes = notes.filter(function (note) {
-        return note.title === title 
-    })
-
-    if (duplicateNotes.length === 0) {
+    if (duplicateNote === undefined) {
         notes.push({
             title: title,
             body: body
@@ -23,11 +20,7 @@ const addNote = (title, body) => {
     } else {
         console.log(chalk.red.inverse(`${chalk.underline(title)} is already a title being used...`))
     }
-
-
-
     saveNotes(notes)
-
 }
 
 const removeNote = title => {
@@ -40,7 +33,12 @@ const removeNote = title => {
         saveNotes(notesToKeep)
         console.log(chalk.green.inverse(`You have deleted the ${chalk.underline(title)} note!`))
     }
-    
+}
+
+const listNotes = () => {
+    const notes = loadNotes()
+    console.log(chalk.inverse('Your notes...'))
+    notes.forEach(note => console.log(chalk.blue.inverse.underline(note.title)));
 }
 
 const saveNotes = notes => {
@@ -49,7 +47,6 @@ const saveNotes = notes => {
 }
 
 const loadNotes = () => {
-
     try {
         const dataBuffer = fs.readFileSync('notes.json')
         const dataJSON = dataBuffer.toString()
@@ -57,11 +54,24 @@ const loadNotes = () => {
     } catch (error) {
         return []
     }
+}
 
+const readNote = title => {
+    const notes = loadNotes()
+    const noteToShow = notes.find(note => note.title === title)
+    
+    if (noteToShow) {
+        console.log(chalk.blue.inverse.underline(noteToShow.title))
+        console.log(chalk.inverse(noteToShow.body))
+    } else {
+        console.log(chalk.red.inverse(`Cannot find note with the title of: ${chalk.underline(title)}`))
+    }
 }
 
 module.exports = {
     getNotes: getNotes,
     addNote: addNote,
     removeNote: removeNote,
+    listNotes: listNotes,
+    readNote: readNote
 }
