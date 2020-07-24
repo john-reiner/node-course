@@ -19,9 +19,9 @@ const addNote = (title, body) => {
             title: title,
             body: body
         })     
-        console.log('New note added')   
+        console.log(chalk.green.inverse(`${chalk.underline(title)} was added to notes!`))   
     } else {
-        console.log('Note title taken!')
+        console.log(chalk.red.inverse(`${chalk.underline(title)} is already a title being used...`))
     }
 
 
@@ -35,10 +35,10 @@ const removeNote = title => {
     const notesToKeep = notes.filter(note => note.title !== title)
     
     if (notesToKeep.length === notes.length) {
-        console.log(chalk.bgRed(`The note title ${chalk.underline(title)} does not exist...`))
+        console.log(chalk.red.inverse(`The note title ${chalk.underline(title)} does not exist...`))
     } else {
         saveNotes(notesToKeep)
-        console.log(chalk.bgGreen(`You have deleted the ${chalk.underline(title)} note!`))
+        console.log(chalk.green.inverse(`You have deleted the ${chalk.underline(title)} note!`))
     }
     
 }
