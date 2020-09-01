@@ -1,50 +1,14 @@
-setTimeout(() => {
-    console.log("Two seconds are up")
-}, 2000);
-
-const name = ['Andrew', 'John', 'Dave', 'Jessica', 'Danielle']
-
-const shortNames = name.filter(name => name.length <= 4)
-
-const geocode = (address, callback) => {
-
+const doWorkCallback = (callback) => {
     setTimeout(() => {
-        const data = {
-            latitude: 0,
-            longitude: 0
-        }
-
-        callback(data)
-    }, 2000);
-
-    
+        //callback('This is my error', undefined)
+        callback(undefined, [1,4,7])
+    }, 2000)
 }
 
-geocode('Philadelphia', (data) => {
-    console.log(data)
+doWorkCallback((error, result) => {
+    if (error) { 
+        return console.log("error: ",error)
+    }
+
+    console.log("result: ",result)
 })
-
-
-
-
-//
-// Goal: Mess around with the callback pattern
-//
-// 1. Define an add function that accepts the correct arguments
-// 2. Use setTimeout to simulate a 2 second delay
-// 3. After 2 seconds are up, call the callback function with the sum
-// 4. Test your work!
-
-// const add = (num1, num2, callback) => {
-
-//     setTimeout(() => {
-//         const addIt = num1 + num2
-
-//         callback(addIt)
-//     }, 2000);
-
-// }
-
-// add(1, 4, (sum) => {
-//     console.log(sum) // Should print: 5
-// })
