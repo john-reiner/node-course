@@ -1,12 +1,38 @@
-const doWorkPromise = new Promise((resolve, reject) => {
-    setTimeout(() => {
-        reject(undefined)
-        resolve([9,2,4,7,9,8])
-    }, 1000)
-})
+const { resolve } = require("path");
 
-doWorkPromise.then((result) => {
-    console.log('Success!', result[3])
-}).catch((error) => {
-    console.log('Error: ', error)
+const add = (a,b) => {
+    return new Promise((resolve, reject) => {
+        setTimeout(() => {
+            resolve(a+b)
+        }, 500);
+    })
+}
+
+// add(1,2).then((sum) => {
+//     console.log(sum)
+
+//     add(sum, 3).then((sum2) => {
+//         console.log(sum2)
+
+//         add(sum2, 3).then((sum3) => {
+//             console.log(sum3)
+//         }).catch((e) => {
+//             console.log(e)
+//         })
+//     }).catch((e) =>  {
+//         console.log(e)
+//     })
+// }).catch((e) => console.log(e))
+
+add(1,2).then((sum) => {
+    console.log(sum)
+    return add(sum, 3)
+}).then((sum2) => {
+    console.log(sum2)
+    return add(sum2, 3)
+}).then((sum3) => {
+    console.log(sum3)
+    
+}).catch((e) => {
+    console.log(e)
 })
