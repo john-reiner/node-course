@@ -1,24 +1,26 @@
 const add = (a,b) => {
     return new Promise((resolve, reject) => {
         setTimeout(() => {
-
-            if (a < 0 || b < 0) {
-                return reject('Numbers have to be positive')
+            if (a<0||b<0) {
+                return reject('Numbers MUST be non-negative.')
             }
-
+            if (typeof a !== 'number' || typeof b !== 'number') {
+                return reject('Can ONLY take in numbers.')
+            }
             resolve(a+b)
-        }, 2000);
+        }, 500);
     })
 }
 
-const doWork = async () =>{
-    const sum  = await add(1, 99)
-    const sum2 = await add(sum, 50)
-    const sum3 = await add(sum2, -1)
-    return sum3
+
+
+const doWork = async () => {
+    const sum = await add(1, 99)
+    const sum2 = await add(sum, 99.68)
+    const sum3 = await add(sum2, 7)
+    return `First: ${sum}. Second: ${sum2}. Third: ${sum3}`
 }
 
-console.log(doWork())
-doWork().then((result) => {
-    console.log('result: ',result)
-}).catch(e => console.log)
+doWork().then(result => console.log('result', result)).catch(e => console.log('ERROR: ',e))
+
+"save this to the database this is going to be awesome this is one of the best typing experiences I have ever seen Call reject sometimes we can only add up pos"
